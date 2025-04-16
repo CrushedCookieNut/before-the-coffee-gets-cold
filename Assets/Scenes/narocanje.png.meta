@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      narocanje_0: -464304545539525323
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

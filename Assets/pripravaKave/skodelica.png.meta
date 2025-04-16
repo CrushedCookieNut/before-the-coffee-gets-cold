@@ -272,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      skodelica_0: -2112041498784264984
+      skodelica_1: 4387682304992554717
+      skodelica_2: 5557851238121243937
+      skodelica_3: -4196013059849738218
+      skodelica_4: -7961241988618632529
+      skodelica_5: -7758780934768767110
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,23 +1,26 @@
 using UnityEngine;
 
 public class Obvestilo : MonoBehaviour {
+    public static bool obvestiloPrikazano;
     private int rnd;
     public static bool customerOrdered;
     private int counter;
 
     void Start() {
-        if ((PlayerRecipeMaker.prevOrderMade && customerOrdered==false) || (customerOrdered==false && PlayerRecipeMaker.numberOfMadeRecipes == 0)) {
+        if ((PlayerRecipeMaker.prevOrderMade==true && customerOrdered==false) || (customerOrdered==false && PlayerRecipeMaker.numberOfMadeRecipes == 0)) {
             rnd = GenerateRandom();
             counter = rnd;
             InvokeRepeating("LoopStep", 0f, 0.1f);
         }
         gameObject.SetActive(false); 
+        obvestiloPrikazano = false;
     }
 
     void Update() {
         if (customerOrdered) {
             CancelInvoke("LoopStep");
             gameObject.SetActive(false);
+            obvestiloPrikazano = false;
             return;
         }
         
@@ -34,6 +37,7 @@ public class Obvestilo : MonoBehaviour {
         if (customerOrdered) {
             CancelInvoke("LoopStep");
             gameObject.SetActive(false);
+            obvestiloPrikazano = false;
             return;
         }
 
@@ -42,6 +46,7 @@ public class Obvestilo : MonoBehaviour {
         } else {
             if ((PlayerRecipeMaker.prevOrderMade || PlayerRecipeMaker.numberOfMadeRecipes == 0) && !customerOrdered) {
                 gameObject.SetActive(true);
+                obvestiloPrikazano = true;
             }
             CancelInvoke("LoopStep");
         }

@@ -172,7 +172,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      coko-sirup_0: 4102201901597233690
+      coko-sirup_1: 7335326532867639428
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

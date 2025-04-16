@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      gumb-desno_0: -8315477026902937039
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

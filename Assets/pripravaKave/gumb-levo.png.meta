@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      gumb-levo_0: -6793329806127449870
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

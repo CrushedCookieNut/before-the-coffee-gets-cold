@@ -1,0 +1,61 @@
+{
+    "ingredients":[
+        {
+            "name": "kava",
+            "amount": 0
+        },
+        {
+            "name": "mleko",
+            "amount": 0
+        },
+        {
+            "name": "smetana",
+            "amount": 0
+        },
+        {
+            "name": "cokoSirup",
+            "amount": 0
+        },
+        {
+            "name": "tapioca",
+            "amount": 0
+        },
+        {
+            "name": "meta",
+            "amount": 0
+        },
+        {
+            "name": "melisa",
+            "amount": 0
+        },
+        {
+            "name": "matcha",
+            "amount": 0
+        },
+        {
+            "name": "malina",
+            "amount": 0
+        },
+        {
+            "name": "mango",
+            "amount": 0
+        },
+        {
+            "name": "kamilica",
+            "amount": 0
+        },
+        {
+            "name": "robida",
+            "amount": 0
+        },
+        {
+            "name": "crni",
+            "amount": 0
+        },
+        {
+            "name": "jagoda",
+            "amount": 0
+        }
+
+    ]
+}

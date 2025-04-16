@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      zunaj_0: -4584962519717704461
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

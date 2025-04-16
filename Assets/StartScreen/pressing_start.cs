@@ -9,5 +9,7 @@ public class start : MonoBehaviour {
         Obvestilo.customerOrdered=false;
         PlayerRecipeMaker.prevOrderMade=false;
         PlayerRecipeMaker.numberOfMadeRecipes=0;
+        PlayerPrefs.SetInt("StTock", tocke.st_tock);
+        PlayerPrefs.Save();
     }
 }

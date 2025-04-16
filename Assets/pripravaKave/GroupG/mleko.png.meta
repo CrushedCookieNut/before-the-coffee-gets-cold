@@ -197,7 +197,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      mleko_0: -1835116892081733501
+      mleko_1: -1990309349850575527
+      mleko_2: -7771578552309917216
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

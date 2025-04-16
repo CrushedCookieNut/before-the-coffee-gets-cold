@@ -6,41 +6,39 @@ using System.Linq;
 public class PlayerRecipeMaker : MonoBehaviour {
     public RecipeDatabase recipeDatabase;
     private GroupManager groupManager;
+    private IngredientDatabase ingredientDatabase;
     private List<string> clickedAssets = new List<string>();
     private List<string> correctRecipe;
     private int recipeDifficulty;
 
     public static bool prevOrderMade;
-
     public static int numberOfMadeRecipes;
 
-    [System.Obsolete]
     private void Start() {
+
+        ingredientDatabase = IngredientDatabase.Instance;
         string selectedRecipeName = PlayerPrefs.GetString("SelectedRecipe", "No Recipe Selected");
-        if (RandomRecipeGenerator.recipeWasGenerated==false) {
+
+        if (!RandomRecipeGenerator.recipeWasGenerated) {
             Debug.LogError("Recipe has not been selected! Please check what the customer wants.");
             SceneManager.LoadScene("MainGame", LoadSceneMode.Single);
             return;
         }
+
         correctRecipe = recipeDatabase.GetRecipeIngredients(selectedRecipeName);
         recipeDifficulty = recipeDatabase.GetDifficulty(selectedRecipeName);
 
         if (correctRecipe == null) {
-            Debug.LogError("Correct recipe not found! Make sure the RecipeDatabase is set up.");
-        } else {
-            Debug.Log($"Correct Recipe: {string.Join(", ", correctRecipe)}");
+            Debug.LogError("Correct recipe not found! Ensure the RecipeDatabase is set up properly.");
+            return;
         }
 
-        groupManager = FindObjectOfType<GroupManager>();
+        Debug.Log($"Correct Recipe: {string.Join(", ", correctRecipe)}");
 
+        groupManager = FindFirstObjectByType<GroupManager>();
         if (groupManager == null) {
             Debug.LogError("GroupManager not found!");
         }
-    }
-
-    public void AddClickedAsset(string assetName) {
-        clickedAssets.Add(assetName);
-        Debug.Log($"Clicked Asset Added: {assetName}");
     }
 
     public void CompareRecipes() {
@@ -51,36 +49,60 @@ public class PlayerRecipeMaker : MonoBehaviour {
 
         List<string> clickedAssets = groupManager.clickedAssets;
         Debug.Log($"Clicked Assets: {string.Join(", ", clickedAssets)}");
-        Debug.Log($"Current Recipe: {string.Join(", ", correctRecipe)}");
+        Debug.Log($"Correct Recipe: {string.Join(", ", correctRecipe)}");
 
         if (clickedAssets.Count != correctRecipe.Count) {
-            tocke.st_tock=tocke.st_tock-150;
-            Debug.LogError("Incorrect recipe! Mismatch in number of items."); //odštejemo točke za napačen recept
+            Debug.LogError("Incorrect recipe! Mismatch in number of items.");
+            SceneManager.LoadScene("MainGame", LoadSceneMode.Single);
+            clickedAssets.Clear();
+            groupManager.clickedAssets.Clear();
+            correctRecipe.Clear();
+            RandomRecipeGenerator.recipeWasGenerated = false;
+            Debug.Log($"Total Points: {tocke.st_tock}");
+            PlayerPrefs.SetInt("StTock", tocke.st_tock);
+            PlayerPrefs.Save();
+
+            prevOrderMade = true;
+            numberOfMadeRecipes += 1;
+
+            Obvestilo.customerOrdered = false;
             return;
         }
 
         if (clickedAssets.OrderBy(x => x).SequenceEqual(correctRecipe.OrderBy(x => x))) {
-            if (recipeDifficulty==1) {
-                tocke.st_tock=tocke.st_tock+100;
-            } else if (recipeDifficulty==2) {
-                tocke.st_tock=tocke.st_tock+200;
-            } else if (recipeDifficulty==3) {
-                tocke.st_tock=tocke.st_tock+300;
+            switch (recipeDifficulty) {
+                case 1:
+                    tocke.st_tock += 100;
+                    break;
+                case 2:
+                    tocke.st_tock += 200;
+                    break;
+                case 3:
+                    tocke.st_tock += 300;
+                    break;
             }
-            Debug.Log("Correct recipe!"); //prištejemo točke odvisno od težavnosti
+            Debug.Log("Correct recipe! Points awarded based on difficulty.");
         } else {
-            tocke.st_tock=tocke.st_tock-150;
-            Debug.LogError("Incorrect recipe! Items do not match."); //odštejemo točke za napačen recept
+            Debug.LogError("Incorrect recipe! Items do not match.");
         }
+
         SceneManager.LoadScene("MainGame", LoadSceneMode.Single);
+
         clickedAssets.Clear();
         groupManager.clickedAssets.Clear();
         correctRecipe.Clear();
-        RandomRecipeGenerator.recipeWasGenerated=false;
-        Debug.Log($"Stevilo tock: {tocke.st_tock}");
-        prevOrderMade=true;
-        numberOfMadeRecipes+=1;
-        Obvestilo.customerOrdered=false;
+        RandomRecipeGenerator.recipeWasGenerated = false;
+        Debug.Log($"Total Points: {tocke.st_tock}");
+        PlayerPrefs.SetInt("StTock", tocke.st_tock);
+        PlayerPrefs.Save();
+
+        prevOrderMade = true;
+        numberOfMadeRecipes += 1;
+
+        Obvestilo.customerOrdered = false;
     }
 
+    private void OnApplicationQuit() {
+        ingredientDatabase.ResetIngredients();
+    }
 }

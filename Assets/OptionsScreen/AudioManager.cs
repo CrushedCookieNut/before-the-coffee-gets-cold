@@ -1,78 +1,57 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AudioManager : MonoBehaviour
-{
-    public static AudioManager instance; // Singleton instance
-    public AudioClip[] musicTracks;      // Array of music tracks
+public class AudioManager : MonoBehaviour {
+    public static AudioManager instance;
+    public AudioClip[] musicTracks;
 
-    private AudioSource audioSource;      // AudioSource for playing music
-    private int currentTrackIndex = -1;  // Track index to keep track of current playing track
+    private AudioSource audioSource;
+    private int currentTrackIndex = -1;
 
-    private void Awake()
-    {
-        // Check if an instance of AudioManager already exists
-        if (instance == null)
-        {
+    private void Awake() {
+        if (instance == null) {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Keep this object alive across scenes
+            DontDestroyOnLoad(gameObject);
 
-            // Create AudioSource if it doesn't exist
             audioSource = GetComponent<AudioSource>();
-            if (audioSource == null)
-            {
+            if (audioSource == null) {
                 audioSource = gameObject.AddComponent<AudioSource>();
             }
 
-            // Ensure the AudioSource settings are correct
             audioSource.loop = true;
             audioSource.playOnAwake = false;
             audioSource.volume = 1f;
 
-            // Subscribe to scene load event
             SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        else
-        {
-            Destroy(gameObject); // Destroy this new instance if one already exists
-            return; // Don't execute further code for this object
+        } else {
+            Destroy(gameObject);
+            return;
         }
     }
 
-    private void OnDestroy()
-    {
-        // Unsubscribe from scene load event to prevent memory leaks
+    private void OnDestroy() {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Ensure audio is still playing and settings are correct after scene load
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         EnsureAudioPlaying();
     }
 
-    // This method will play a selected track
-    public void PlayMusic(int trackIndex)
-    {
-        if (trackIndex >= 0 && trackIndex < musicTracks.Length)
-        {
-            if (currentTrackIndex != trackIndex) // Don't restart the same track
-            {
+    public void PlayMusic(int trackIndex) {
+        if (trackIndex >= 0 && trackIndex < musicTracks.Length) {
+            if (currentTrackIndex != trackIndex) {
                 currentTrackIndex = trackIndex;
                 audioSource.clip = musicTracks[trackIndex];
-                audioSource.Play(); // Start playing the selected track
+                audioSource.Play();
             }
         }
     }
 
-    // Method to ensure the audio continues playing across scenes
-    public void EnsureAudioPlaying()
-    {
-        if (audioSource != null && !audioSource.isPlaying && currentTrackIndex >= 0 && musicTracks.Length > 0 && currentTrackIndex < musicTracks.Length)
-        {
+    public void EnsureAudioPlaying() {
+        if (audioSource != null && !audioSource.isPlaying && currentTrackIndex >= 0 && musicTracks.Length > 0 && currentTrackIndex < musicTracks.Length) {
              audioSource.clip = musicTracks[currentTrackIndex];
-             audioSource.Play(); // Start playing the current track if not already playing
+             audioSource.Play();
         }
     }
 }

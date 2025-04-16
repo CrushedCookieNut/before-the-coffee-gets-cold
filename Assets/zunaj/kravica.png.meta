@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      kravica_0: 1910563736726436215
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
